@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bug Report</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #0d0d0d;
+            color: #ffffff;
+            overflow-x: hidden; /* Hide horizontal scrollbar */
+        }
+
+        header {
+            background-color: #1a1a1a;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-shadow: 0 0 10px #ff0000;
+            animation: glow 1s infinite alternate;
+        }
+
+        form {
+            padding: 50px;
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ff0000;
+            background-color: #1a1a1a;
+            color: #ffffff;
+            resize: vertical; /* Allow vertical resizing */
+        }
+
+        button {
+            background-color: #ff0000;
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        button:hover {
+            transform: scale(1.1);
+        }
+
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000, 0 0 30px #ff0000, 0 0 40px #ff0000, 0 0 50px #ff0000;
+            }
+            to {
+                text-shadow: 0 0 20px #ff0000, 0 0 30px #ff0000, 0 0 40px #ff0000, 0 0 50px #ff0000, 0 0 60px #ff0000;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Report a Bug</h1>
+    </header>
+
+    <form action="#" method="post" id="bugForm">
+        <label for="bugDescription">Describe the bug:</label>
+        <textarea id="bugDescription" name="bugDescription" rows="4" required></textarea>
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        // JavaScript for sending bug report to Discord webhook
+        document.getElementById('bugForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const bugDescription = document.getElementById('bugDescription').value;
+
+            // Replace 'YOUR_DISCORD_WEBHOOK_URL' with your actual Discord webhook URL
+            const webhookUrl = 'https://discord.com/api/webhooks/1241586953317777500/_7upOAwf9ePmUAQxGrCNgwQWNOllr5X_fq_ApAB83aeK_p7xaoNmgbCxEGf6x4UBfbdE';
+
+            fetch(webhookUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ content: `**Bug Report:**\n${bugDescription}` })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to send bug report');
+                }
+                alert('Bug report submitted successfully!');
+                document.getElementById('bugForm').reset();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Failed to submit bug report. Please try again later.');
+            });
+        });
+    </script>
+</body>
+  </html>
+  
